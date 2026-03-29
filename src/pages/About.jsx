@@ -60,7 +60,7 @@ export default function About() {
             </h1>
             <p className="mt-6 text-white/60 text-lg leading-relaxed">
               M·SOLE is a freshly launched technology studio founded by Muhammad Daniyal Amjad,
-              specializing in AI and Embedded Systems engineering — built from day one to solve real problems.
+              specializing in AI and Embedded Systems engineering built from day one to solve real problems.
             </p>
             <div className="mt-8 flex flex-col gap-3">
               <span className="text-xs font-semibold text-white/30 uppercase tracking-widest">Hire Me</span>
@@ -116,7 +116,7 @@ export default function About() {
               </div>
               <h3 className="text-2xl font-display font-bold text-foreground">Our Vision</h3>
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                To become a globally trusted name in intelligent systems engineering — where every device
+                To become a globally trusted name in intelligent systems engineering where every device
                 is smarter, every process is optimized, and every solution drives meaningful impact
                 for our clients and their communities.
               </p>
