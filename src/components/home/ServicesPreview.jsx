@@ -7,7 +7,7 @@ const services = [
   {
     icon: Brain,
     title: 'AI & Machine Learning',
-    description: 'Custom ML models, NLP, predictive analytics, and MLOps — intelligent systems that learn and deliver real results.',
+    description: 'Custom ML models, NLP, predictive analytics, and MLOps intelligent systems that learn and deliver real results.',
     number: '01',
     tag: 'AI / ML',
   },
@@ -35,14 +35,14 @@ const services = [
   {
     icon: GitMerge,
     title: 'n8n & Automation',
-    description: 'End-to-end workflow automation with n8n, Make, and Zapier — eliminating manual work at scale.',
+    description: 'End-to-end workflow automation with n8n, Make, and Zapier eliminating manual work at scale.',
     number: '05',
     tag: 'Automation',
   },
   {
     icon: Users,
     title: 'CRM Integrations',
-    description: 'GoHighLevel, Zoho CRM, and full pipeline automation — custom workflows and API integrations.',
+    description: 'GoHighLevel, Zoho CRM, and full pipeline automation custom workflows and API integrations.',
     number: '06',
     tag: 'CRM',
   },
