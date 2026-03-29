@@ -5,7 +5,7 @@ import { ArrowRight, Shield, Lightbulb, Target, CheckCircle } from 'lucide-react
 
 const highlights = [
   'AI models deployed across 10+ industries',
-  'Hardware to cloud — full-stack capability',
+  'Hardware to cloud full-stack capability',
   'Agile delivery with rigorous quality assurance',
   'Ongoing support and system maintenance',
 ];
