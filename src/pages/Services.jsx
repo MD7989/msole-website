@@ -210,7 +210,7 @@ export default function Services() {
               <span className="block gold-shimmer mt-1">Drive Innovation</span>
             </h1>
             <p className="mt-7 text-white/45 text-lg leading-relaxed max-w-xl">
-              Comprehensive engineering services spanning AI, embedded systems, IoT, and intelligent automation — delivered with precision.
+              Comprehensive engineering services spanning AI, embedded systems, IoT, and intelligent automation delivered with precision.
             </p>
 
             {/* Service count strip */}
