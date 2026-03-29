@@ -48,7 +48,7 @@ export default function CTASection() {
             </h2>
 
             <p className="mt-6 text-white/40 text-lg max-w-xl mx-auto leading-relaxed">
-              Whether you need AI integration, embedded systems design, or custom automation — 
+              Whether you need AI integration, embedded systems design, or custom automation 
               we're ready to bring your vision to life.
             </p>
 
