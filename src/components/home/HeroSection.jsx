@@ -106,7 +106,7 @@ export default function HeroSection() {
       >
         <span className="flex h-1.5 w-1.5 rounded-full bg-secondary/70" />
         <span className="text-[11px] font-mono text-white/30 tracking-[0.2em] uppercase">
-          Islamabad, Pakistan · Est. 2022 · Remote Worldwide
+          Islamabad, Pakistan · Est. 2025 · Remote Worldwide
         </span>
       </motion.div>
 
