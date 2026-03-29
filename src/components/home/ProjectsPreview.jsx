@@ -8,7 +8,7 @@ const projects = [
     icon: Bot,
     tag: 'AI Agents',
     title: 'AI Sales Voice Agent',
-    description: '24/7 AI voice agent handling inbound leads, booking demos, and qualifying prospects — fully autonomous pipeline.',
+    description: '24/7 AI voice agent handling inbound leads, booking demos, and qualifying prospects fully autonomous pipeline.',
     metrics: '3× lead conversion',
   },
   {
@@ -22,7 +22,7 @@ const projects = [
     icon: GitMerge,
     tag: 'AI Automation',
     title: 'n8n E-Commerce Pipeline',
-    description: 'End-to-end order processing automation connecting Shopify, CRM, fulfilment, and support — zero manual steps.',
+    description: 'End-to-end order processing automation connecting Shopify, CRM, fulfilment, and support zero manual steps.',
     metrics: '100% automated',
   },
   {
