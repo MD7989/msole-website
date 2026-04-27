@@ -1,0 +1,10 @@
+{
+  "name": "M-SOLE",
+  "short_name": "M-SOLE",
+  "description": "AI and embedded systems engineering services.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#050d1a",
+  "theme_color": "#050d1a"
+}
