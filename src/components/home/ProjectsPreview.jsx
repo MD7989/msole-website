@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Brain, Cpu, Wifi, Bot, GitMerge, Users, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, Brain, Cpu, Bot, GitMerge, Users, ArrowUpRight } from 'lucide-react';
 
 const projects = [
   {

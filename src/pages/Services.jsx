@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { GitMerge, Bot, Users, Database, Brain, Cpu, Wifi, Eye, ArrowRight, CheckCircle, ArrowUpRight } from 'lucide-react';

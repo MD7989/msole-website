@@ -6,13 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import emailjs from '@emailjs/browser';
-
-const EMAILJS_SERVICE_ID  = 'service_mmlmk7m';
-const EMAILJS_TEMPLATE_ID = 'template_4qrqqwh';
-const EMAILJS_PUBLIC_KEY  = 'W5c5SQmU2R-5ADGlT';
-
-emailjs.init(EMAILJS_PUBLIC_KEY);
+import { contactService } from '@/services';
 
 const UpworkIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -46,32 +40,41 @@ export default function Contact() {
   // Single clean handler — no e, no form submit, just a direct async function
   const handleSubmit = async () => {
     console.log('handleSubmit called', formData);
+    const payload = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      company: formData.company.trim(),
+      service: formData.service.trim(),
+      message: formData.message.trim(),
+    };
 
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!payload.name || !payload.email || !payload.message) {
       toast.error('Please fill in your Name, Email and Message.');
+      return;
+    }
+
+    if (payload.name.length < 2) {
+      toast.error('Please enter your full name.');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+
+    if (payload.message.length < 10) {
+      toast.error('Please enter a message of at least 10 characters.');
       return;
     }
 
     setSending(true);
     try {
-      const result = await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name:  formData.name,
-          from_email: formData.email,
-          company:    formData.company || 'N/A',
-          service:    formData.service || 'Not specified',
-          message:    formData.message,
-          reply_to:   formData.email,
-        },
-        EMAILJS_PUBLIC_KEY
-      );
-      console.log('EmailJS success:', result);
+      await contactService.createMessage(payload);
       toast.success("Message sent! I'll get back to you within 24 hours.");
       setFormData({ name: '', email: '', company: '', service: '', message: '' });
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Contact form error:', error);
       toast.error('Failed to send. Please email me directly at daniyal.amjad7989@gmail.com');
     } finally {
       setSending(false);

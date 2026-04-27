@@ -1,39 +1,63 @@
-**Welcome to your Base44 project** 
+# MSole Website
 
-**About**
+Vite + React frontend with a custom Node.js/Express backend using Supabase Auth and Supabase Postgres.
 
-View and Edit  your app on [Base44.com](http://Base44.com) 
+## Prerequisites
 
-This project contains everything you need to run your app locally.
+- Node.js
+- npm
+- Supabase project
 
-**Edit the code in your local development environment**
+## Frontend Setup
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
-
-**Prerequisites:** 
-
-1. Clone the repository using the project's Git URL 
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
-
-```
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=your_backend_url
-
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
+```powershell
+npm install
+Copy-Item .env.example .env.local
+npm run dev
 ```
 
-Run the app: `npm run dev`
+Frontend runs at:
 
-**Publish your changes**
+```text
+http://localhost:5173/
+```
 
-Open [Base44.com](http://Base44.com) and click on Publish.
+## Backend Setup
 
-**Docs & Support**
+```powershell
+npm run install:backend
+Copy-Item backend\.env.example backend\.env
+npm run dev:backend
+```
 
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+Before starting the backend, run `supabase/schema.sql` in the Supabase SQL Editor and fill in the Supabase values in `backend/.env`.
 
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+Backend runs at:
+
+```text
+http://localhost:5000/api
+```
+
+Health check:
+
+```text
+http://localhost:5000/api/health
+```
+
+## Environment
+
+Frontend env file:
+
+```text
+.env.local
+```
+
+Backend env file:
+
+```text
+backend/.env
+```
+
+## Documentation
+
+See [BACKEND_DOCUMENTATION.md](./BACKEND_DOCUMENTATION.md) for the backend architecture, endpoints, database models, and local setup.

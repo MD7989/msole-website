@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Cpu, Wifi, Bot, GitMerge, Users, ArrowUpRight, Database, Code, Zap } from 'lucide-react';
+import { Brain, Cpu, Wifi, Bot, GitMerge, Users, ArrowUpRight, Database, Zap } from 'lucide-react';
 
 const categories = ['All', 'AI Agents', 'Automation', 'CRM', 'Embedded', 'IoT'];
 
