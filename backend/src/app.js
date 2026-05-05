@@ -13,7 +13,13 @@ const app = express();
 
 app.use(helmet());
 app.use(cors({
-  origin: env.clientUrl,
+  origin(origin, callback) {
+    if (!origin || env.clientUrls.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`CORS origin not allowed: ${origin}`));
+  },
   credentials: true
 }));
 app.use(express.json({ limit: '1mb' }));

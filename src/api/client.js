@@ -10,10 +10,8 @@ export const tokenStorage = {
     return localStorage.getItem(REFRESH_TOKEN_KEY);
   },
   set(token, refreshToken) {
-    localStorage.setItem(ACCESS_TOKEN_KEY, token);
-
-    if (refreshToken) {
-      localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+    if (token || refreshToken) {
+      this.clear();
     }
   },
   clear() {
@@ -32,16 +30,13 @@ const parseResponseBody = async (response) => {
 const refreshAccessToken = async () => {
   const refreshToken = tokenStorage.getRefresh();
 
-  if (!refreshToken) {
-    return null;
-  }
-
   const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ refreshToken })
+    body: JSON.stringify(refreshToken ? { refreshToken } : {})
   });
   const data = await parseResponseBody(response);
 
@@ -51,7 +46,7 @@ const refreshAccessToken = async () => {
   }
 
   tokenStorage.set(data.token, data.refreshToken);
-  return data.token;
+  return true;
 };
 
 export const apiClient = async (path, options = {}, canRefresh = true) => {
@@ -67,6 +62,7 @@ export const apiClient = async (path, options = {}, canRefresh = true) => {
 
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
+    credentials: 'include',
     headers
   });
 

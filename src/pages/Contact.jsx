@@ -39,7 +39,6 @@ export default function Contact() {
 
   // Single clean handler — no e, no form submit, just a direct async function
   const handleSubmit = async () => {
-    console.log('handleSubmit called', formData);
     const payload = {
       name: formData.name.trim(),
       email: formData.email.trim(),

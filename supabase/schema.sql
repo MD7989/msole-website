@@ -20,6 +20,52 @@ create table if not exists public.profiles (
   updated_at timestamptz not null default now()
 );
 
+create or replace function public.create_profile_with_initial_admin(
+  profile_id uuid,
+  profile_name text,
+  profile_email text
+)
+returns public.profiles
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  created_profile public.profiles;
+  assigned_role text;
+begin
+  perform pg_advisory_xact_lock(hashtext('msole_initial_admin_profile'));
+
+  assigned_role := case
+    when not exists (select 1 from public.profiles)
+      then 'admin'
+    else 'user'
+  end;
+
+  insert into public.profiles (
+    id,
+    name,
+    email,
+    role,
+    is_active
+  ) values (
+    profile_id,
+    profile_name,
+    lower(profile_email),
+    assigned_role,
+    true
+  )
+  returning * into created_profile;
+
+  return created_profile;
+end;
+$$;
+
+revoke all on function public.create_profile_with_initial_admin(uuid, text, text) from public;
+revoke all on function public.create_profile_with_initial_admin(uuid, text, text) from anon;
+revoke all on function public.create_profile_with_initial_admin(uuid, text, text) from authenticated;
+grant execute on function public.create_profile_with_initial_admin(uuid, text, text) to service_role;
+
 drop trigger if exists set_profiles_updated_at on public.profiles;
 create trigger set_profiles_updated_at
 before update on public.profiles

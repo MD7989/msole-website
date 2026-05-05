@@ -1,31 +1,20 @@
 import { supabaseAdmin } from '../config/supabase.js';
-import { PROFILE_TABLE, mapUserProfile, toProfileInsert } from '../models/User.js';
+import { PROFILE_TABLE, mapUserProfile } from '../models/User.js';
 import { ApiError } from '../utils/ApiError.js';
 
-export const countProfiles = async () => {
-  const { count, error } = await supabaseAdmin
-    .from(PROFILE_TABLE)
-    .select('id', { count: 'exact', head: true });
-
-  if (error) {
-    throw new ApiError(500, `Failed to count user profiles: ${error.message}`);
-  }
-
-  return count || 0;
-};
-
-export const createUserProfile = async ({ id, name, email, role }) => {
+export const createUserProfile = async ({ id, name, email }) => {
   const { data, error } = await supabaseAdmin
-    .from(PROFILE_TABLE)
-    .insert(toProfileInsert({ id, name, email, role }))
-    .select('*')
-    .single();
+    .rpc('create_profile_with_initial_admin', {
+      profile_id: id,
+      profile_name: name,
+      profile_email: email
+    });
 
   if (error) {
     throw new ApiError(500, `Failed to create user profile: ${error.message}`);
   }
 
-  return data;
+  return Array.isArray(data) ? data[0] : data;
 };
 
 export const getUserForAuthUser = async (authUser) => {

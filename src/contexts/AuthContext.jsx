@@ -25,20 +25,15 @@ export const AuthProvider = ({ children }) => {
       setAppPublicSettings(publicSettings);
       setIsLoadingPublicSettings(false);
 
-      if (authService.hasToken()) {
-        await checkUserAuth();
-        return;
-      }
-
-      setIsAuthenticated(false);
-      setUser(null);
-      setIsLoadingAuth(false);
-
-      if (publicSettings.authRequired) {
-        setAuthError({
-          type: 'auth_required',
-          message: 'Authentication is required to view this app.'
-        });
+      try {
+        await checkUserAuth({ showError: publicSettings.authRequired });
+      } catch {
+        if (publicSettings.authRequired) {
+          setAuthError({
+            type: 'auth_required',
+            message: 'Authentication is required to view this app.'
+          });
+        }
       }
     } catch (error) {
       setAuthError({
@@ -50,21 +45,27 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const checkUserAuth = async () => {
+  const checkUserAuth = async ({ showError = true } = {}) => {
     try {
       setIsLoadingAuth(true);
       const data = await authService.me();
       setUser(data.user);
       setIsAuthenticated(true);
       setIsLoadingAuth(false);
+      return data.user;
     } catch (error) {
       setUser(null);
       setIsAuthenticated(false);
       setIsLoadingAuth(false);
-      setAuthError({
-        type: 'auth_required',
-        message: error.message || 'Authentication required'
-      });
+
+      if (showError) {
+        setAuthError({
+          type: 'auth_required',
+          message: error.message || 'Authentication required'
+        });
+      }
+
+      throw error;
     }
   };
 
@@ -101,6 +102,7 @@ export const AuthProvider = ({ children }) => {
       login,
       register,
       logout,
+      checkUserAuth,
       checkAppState
     }}>
       {children}

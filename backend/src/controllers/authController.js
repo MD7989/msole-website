@@ -1,7 +1,8 @@
 import { createSupabaseAnonClient, supabaseAdmin } from '../config/supabase.js';
-import { countProfiles, createUserProfile, getUserForAuthUser } from '../services/userService.js';
+import { createUserProfile, getUserForAuthUser } from '../services/userService.js';
 import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
+import { clearAuthCookies, getAuthCookies, setAuthCookies } from '../utils/authCookies.js';
 
 const isAlreadyRegisteredError = (error) => {
   return /already|exists|registered/i.test(error?.message || '');
@@ -16,16 +17,23 @@ const toAuthResponse = async ({ user: authUser, session }) => {
 
   return {
     user,
-    token: session.access_token,
-    refreshToken: session.refresh_token,
     expiresAt: session.expires_at
   };
+};
+
+const sendAuthResponse = async (res, authData, statusCode = 200) => {
+  setAuthCookies(res, {
+    token: authData.session?.access_token,
+    refreshToken: authData.session?.refresh_token,
+    expiresAt: authData.session?.expires_at
+  });
+
+  return res.status(statusCode).json(await toAuthResponse(authData));
 };
 
 export const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.validated.body;
   const normalizedEmail = email.toLowerCase();
-  const role = (await countProfiles()) === 0 ? 'admin' : 'user';
   const { data: created, error: createError } = await supabaseAdmin.auth.admin.createUser({
     email: normalizedEmail,
     password,
@@ -49,8 +57,7 @@ export const register = asyncHandler(async (req, res) => {
     await createUserProfile({
       id: created.user.id,
       name,
-      email: normalizedEmail,
-      role
+      email: normalizedEmail
     });
   } catch (error) {
     const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(created.user.id);
@@ -70,7 +77,7 @@ export const register = asyncHandler(async (req, res) => {
     throw new ApiError(401, signInError.message);
   }
 
-  res.status(201).json(await toAuthResponse(signInData));
+  return sendAuthResponse(res, signInData, 201);
 });
 
 export const login = asyncHandler(async (req, res) => {
@@ -83,11 +90,17 @@ export const login = asyncHandler(async (req, res) => {
     throw new ApiError(401, 'Invalid email or password');
   }
 
-  res.json(await toAuthResponse(data));
+  return sendAuthResponse(res, data);
 });
 
 export const refresh = asyncHandler(async (req, res) => {
-  const { refreshToken } = req.validated.body;
+  const { refreshToken: cookieRefreshToken } = getAuthCookies(req);
+  const refreshToken = req.validated.body.refreshToken || cookieRefreshToken;
+
+  if (!refreshToken) {
+    throw new ApiError(401, 'Refresh token is required');
+  }
+
   const { data, error } = await createSupabaseAnonClient()
     .auth
     .refreshSession({ refresh_token: refreshToken });
@@ -96,7 +109,7 @@ export const refresh = asyncHandler(async (req, res) => {
     throw new ApiError(401, 'Invalid or expired refresh token');
   }
 
-  res.json(await toAuthResponse(data));
+  return sendAuthResponse(res, data);
 });
 
 export const me = asyncHandler(async (req, res) => {
@@ -105,7 +118,17 @@ export const me = asyncHandler(async (req, res) => {
   });
 });
 
-export const logout = asyncHandler(async (_req, res) => {
+export const logout = asyncHandler(async (req, res) => {
+  if (req.supabaseAccessToken) {
+    const { error } = await supabaseAdmin.auth.admin.signOut(req.supabaseAccessToken);
+
+    if (error) {
+      console.error('Failed to revoke Supabase session during logout:', error);
+    }
+  }
+
+  clearAuthCookies(res);
+
   res.json({
     message: 'Logged out'
   });

@@ -16,6 +16,6 @@
     "resolveJsonModule": true,
     "types": ["vite/client"]
   },
-  "include": ["src/components/**/*.js", "src/pages/**/*.jsx", "src/contexts/**/*.jsx", "src/hooks/**/*.jsx", "src/App.jsx"],
+  "include": ["src/app/**/*.jsx", "src/components/**/*.js", "src/components/**/*.jsx", "src/pages/**/*.jsx", "src/contexts/**/*.jsx", "src/hooks/**/*.jsx"],
   "exclude": ["node_modules", "dist", "src/components/ui", "src/api", "src/lib", "src/config", "src/middleware", "src/services", "src/types"]
 } 

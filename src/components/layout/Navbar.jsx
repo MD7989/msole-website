@@ -104,15 +104,15 @@ export default function Navbar() {
           {/* Right side — social icons + status + CTA */}
           <div className="hidden md:flex items-center gap-3">
             {/* Social icons */}
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.linkedin.com/in/muhammad-daniyal-amjad/" target="_blank" rel="noopener noreferrer"
               className="w-8 h-8 rounded-md border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/25 transition-all duration-200">
               <Linkedin className="w-3.5 h-3.5" />
             </a>
-            <a href="https://wa.me" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/923356561702" target="_blank" rel="noopener noreferrer"
               className="w-8 h-8 rounded-md border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/25 transition-all duration-200">
               <MessageCircle className="w-3.5 h-3.5" />
             </a>
-            <a href="mailto:contact@msole.com"
+            <a href="mailto:daniyal.amjad7989@gmail.com"
               className="w-8 h-8 rounded-md border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/25 transition-all duration-200">
               <Mail className="w-3.5 h-3.5" />
             </a>

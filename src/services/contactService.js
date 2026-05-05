@@ -6,5 +6,9 @@ export const contactService = {
       method: 'POST',
       body: JSON.stringify(payload)
     });
+  },
+
+  listMessages() {
+    return apiClient('/contact');
   }
 };

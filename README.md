@@ -60,4 +60,4 @@ backend/.env
 
 ## Documentation
 
-See [BACKEND_DOCUMENTATION.md](./BACKEND_DOCUMENTATION.md) for the backend architecture, endpoints, database models, and local setup.
+See [docs/BACKEND_DOCUMENTATION.md](./docs/BACKEND_DOCUMENTATION.md) for the backend architecture, endpoints, database models, and local setup.

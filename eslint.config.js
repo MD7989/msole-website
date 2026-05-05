@@ -11,7 +11,7 @@ export default [
       "src/pages/**/*.{js,mjs,cjs,jsx}",
       "src/contexts/**/*.{js,mjs,cjs,jsx}",
       "src/hooks/**/*.{js,mjs,cjs,jsx}",
-      "src/App.jsx",
+      "src/app/**/*.{js,mjs,cjs,jsx}",
     ],
     ignores: ["src/lib/**/*", "src/components/ui/**/*", "src/api/**/*", "src/config/**/*", "src/middleware/**/*", "src/services/**/*", "src/types/**/*"],
     ...pluginJs.configs.recommended,
