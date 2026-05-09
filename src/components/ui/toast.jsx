@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/** @type {React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>} */
 const ToastProvider = React.forwardRef(({ ...props }, ref) => (
   <div
     ref={ref}
@@ -12,6 +13,7 @@ const ToastProvider = React.forwardRef(({ ...props }, ref) => (
 ));
 ToastProvider.displayName = "ToastProvider";
 
+/** @type {React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>} */
 const ToastViewport = React.forwardRef(({ ...props }, ref) => (
   <div
     ref={ref}
@@ -37,6 +39,12 @@ const toastVariants = cva(
   }
 );
 
+/**
+ * @typedef {React.HTMLAttributes<HTMLDivElement> &
+ *   import("class-variance-authority").VariantProps<typeof toastVariants>} ToastProps
+ */
+
+/** @type {React.ForwardRefExoticComponent<ToastProps & React.RefAttributes<HTMLDivElement>>} */
 const Toast = React.forwardRef(({ className, variant, ...props }, ref) => {
   return (
     <div
@@ -48,6 +56,7 @@ const Toast = React.forwardRef(({ className, variant, ...props }, ref) => {
 });
 Toast.displayName = "Toast";
 
+/** @type {React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>} */
 const ToastAction = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
@@ -60,6 +69,7 @@ const ToastAction = React.forwardRef(({ className, ...props }, ref) => (
 ));
 ToastAction.displayName = "ToastAction";
 
+/** @type {React.ForwardRefExoticComponent<React.ButtonHTMLAttributes<HTMLButtonElement> & React.RefAttributes<HTMLButtonElement>>} */
 const ToastClose = React.forwardRef(({ className, ...props }, ref) => (
   <button
     ref={ref}
@@ -75,6 +85,7 @@ const ToastClose = React.forwardRef(({ className, ...props }, ref) => (
 ));
 ToastClose.displayName = "ToastClose";
 
+/** @type {React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>} */
 const ToastTitle = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}
@@ -84,6 +95,7 @@ const ToastTitle = React.forwardRef(({ className, ...props }, ref) => (
 ));
 ToastTitle.displayName = "ToastTitle";
 
+/** @type {React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>>} */
 const ToastDescription = React.forwardRef(({ className, ...props }, ref) => (
   <div
     ref={ref}

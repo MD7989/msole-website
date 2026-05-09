@@ -1,4 +1,4 @@
-import { apiClient, tokenStorage } from '@/api/client';
+import { apiClient, legacyAuthStorage } from '@/api/client';
 
 export const authService = {
   async register(payload) {
@@ -23,11 +23,7 @@ export const authService = {
     try {
       await apiClient('/auth/logout', { method: 'POST' });
     } finally {
-      tokenStorage.clear();
+      legacyAuthStorage.clear();
     }
-  },
-
-  hasToken() {
-    return Boolean(tokenStorage.get() || tokenStorage.getRefresh());
   }
 };

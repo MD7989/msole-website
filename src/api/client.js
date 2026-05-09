@@ -2,18 +2,7 @@ const API_BASE_URL = (import.meta.env && import.meta.env.VITE_API_BASE_URL) || '
 const ACCESS_TOKEN_KEY = 'msole_auth_token';
 const REFRESH_TOKEN_KEY = 'msole_refresh_token';
 
-export const tokenStorage = {
-  get() {
-    return localStorage.getItem(ACCESS_TOKEN_KEY);
-  },
-  getRefresh() {
-    return localStorage.getItem(REFRESH_TOKEN_KEY);
-  },
-  set(token, refreshToken) {
-    if (token || refreshToken) {
-      this.clear();
-    }
-  },
+export const legacyAuthStorage = {
   clear() {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
@@ -28,37 +17,29 @@ const parseResponseBody = async (response) => {
 };
 
 const refreshAccessToken = async () => {
-  const refreshToken = tokenStorage.getRefresh();
-
   const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
     method: 'POST',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(refreshToken ? { refreshToken } : {})
+    body: JSON.stringify({})
   });
   const data = await parseResponseBody(response);
 
   if (!response.ok) {
-    tokenStorage.clear();
+    legacyAuthStorage.clear();
     return null;
   }
 
-  tokenStorage.set(data.token, data.refreshToken);
   return true;
 };
 
 export const apiClient = async (path, options = {}, canRefresh = true) => {
-  const token = tokenStorage.get();
   const headers = {
     'Content-Type': 'application/json',
     ...(options.headers || {})
   };
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
 
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
@@ -68,7 +49,7 @@ export const apiClient = async (path, options = {}, canRefresh = true) => {
 
   const data = await parseResponseBody(response);
 
-  if (response.status === 401 && canRefresh && path !== '/auth/refresh') {
+  if (response.status === 401 && canRefresh && path !== '/auth/refresh' && path !== '/auth/login' && path !== '/auth/register') {
     const refreshedToken = await refreshAccessToken();
 
     if (refreshedToken) {

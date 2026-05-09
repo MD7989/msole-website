@@ -90,8 +90,10 @@ export default function TechStack() {
                 e.currentTarget.style.transform = 'translateY(-8px)';
                 e.currentTarget.style.borderColor = 'rgba(201,168,76,0.45)';
                 e.currentTarget.style.boxShadow = '0 12px 28px rgba(201,168,76,0.18)';
+                /** @type {HTMLImageElement | null} */
                 const img = e.currentTarget.querySelector('img');
                 if (img) { img.style.transform = 'scale(1.15)'; img.style.opacity = '1'; }
+                /** @type {HTMLElement | null} */
                 const glow = e.currentTarget.querySelector('.card-glow');
                 if (glow) glow.style.opacity = '1';
               }}
@@ -99,8 +101,10 @@ export default function TechStack() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
                 e.currentTarget.style.boxShadow = 'none';
+                /** @type {HTMLImageElement | null} */
                 const img = e.currentTarget.querySelector('img');
                 if (img) { img.style.transform = 'scale(1)'; img.style.opacity = '0.65'; }
+                /** @type {HTMLElement | null} */
                 const glow = e.currentTarget.querySelector('.card-glow');
                 if (glow) glow.style.opacity = '0';
               }}
@@ -126,7 +130,7 @@ export default function TechStack() {
                   opacity: 0.65,
                   transition: 'transform 0.3s ease, opacity 0.3s ease',
                 }}
-                onError={e => { e.target.style.display = 'none'; }}
+                onError={e => { e.currentTarget.style.display = 'none'; }}
               />
 
               <span
